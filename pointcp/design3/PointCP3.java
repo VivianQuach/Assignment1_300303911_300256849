@@ -1,7 +1,9 @@
-package design2, design3; 
+package design3;
+import design5.PointCP5;
 
-import java.io.IOException;
 import java.lang.Math;
+
+import design2.PointCP2;
 
 // This file contains material supporting section 2.9 of
 //the textbook :
@@ -18,7 +20,7 @@ import java.lang.Math;
  * @author Dr Timothy C. Lethbridge
  * @version July 2000
  */
-public class PointCP3 {
+public class PointCP3 extends PointCP5{
   // Instance variables ************************************************
   /**
    * Contains C(artesian) or P(olar) to identify the type of
@@ -60,9 +62,8 @@ public class PointCP3 {
   /**
    * Converts Cartesian coordinates to Polar coordinates.
    */
-  public PointCP2 convertStorageToPolar() {
-    PointCP2 conversion = new PointCP2(getRho(), getTheta());
-    return conversion;
+  public PointCP5 convertStorageToPolar() {
+    return new PointCP2(getRho(), getTheta());
   }
   /**
    * Converts Polar coordinates to Cartesian coordinates.
@@ -91,14 +92,8 @@ public class PointCP3 {
    * @param rotation The number of degrees to rotate the point.
    * @return The rotated image of the original point.
    */
-  public PointCP3 rotatePoint(double rotation) {
-    double radRotation = Math.toRadians(rotation);
-    double X = getX();
-    double Y = getY();
-    return new PointCP3(
-
-        (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
-        (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y));
+  public PointCP5 rotatePoint(double rotation) {
+    return new PointCP2(getRho(), (getTheta() + Math.toRadians(rotation)) % (2 * Math.PI));
   }
   /**
    * Returns coordinates.
@@ -106,5 +101,10 @@ public class PointCP3 {
    */
   public String toString() {
     return "Stored as Polar [" + getX() + ',' + getY() + "]" + "\n" + "Computed as Cartesian [" + getRho() + ',' + getTheta() + "]";
+  }
+  @Override
+  public double getDistance(PointCP5 p) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getDistance'");
   }
 }

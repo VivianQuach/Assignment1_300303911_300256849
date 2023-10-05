@@ -1,5 +1,5 @@
-package pointcp.design2;
-import java.io.IOException;
+package design2;
+import design5.PointCP5; 
 import java.lang.Math;
 
 
@@ -19,7 +19,7 @@ import java.lang.Math;
  * @author Dr Timothy C. Lethbridge
  * @version July 2000
  */
-public class PointCP2 {
+public class PointCP2 extends PointCP5{
   // Instance variables ************************************************
   /**
    * Contains the current value of X or RHO depending on the type
@@ -42,12 +42,12 @@ public class PointCP2 {
   // Instance methods **************************************************
   public double getX() {
    
-    return (Math.cos(Math.toRadians(this.theta)) * this.rho);
- 
+    return rho * Math.cos(theta);
+    
   }
   public double getY() {
     
-    return (Math.sin(Math.toRadians(this.theta)) * this.rho);
+    return rho * Math.sin(theta);
  
   }
   public double getRho() {
@@ -57,19 +57,6 @@ public class PointCP2 {
   public double getTheta() {
   
     return this.theta;
-  }
-  /**
-   * Converts Cartesian coordinates to Polar coordinates.
-   */
-  public void convertStorageToPolar() {
-    return;
-  }
-  /**
-   * Converts Polar coordinates to Cartesian coordinates.
-   */
-  public PointCP3 convertStorageToCartesian() {
-    PointCP3 conversion = new PointCP3(getX(), getY());
-    return conversion;
   }
   /**
    * Calculates the distance in between two points using the Pythagorean
@@ -93,13 +80,7 @@ public class PointCP2 {
    * @return The rotated image of the original point.
    */
   public PointCP2 rotatePoint(double rotation) {
-    double radRotation = Math.toRadians(rotation);
-    double X = getX();
-    double Y = getY();
-    return new PointCP3(
-        (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
-        (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y))
-        .convertStorageToPolar();
+    return new PointCP2(rho, theta + Math.toRadians(rotation) % (2 * Math.PI));
   }
   /**
    * Returns information about the coordinates.
@@ -109,5 +90,10 @@ public class PointCP2 {
   public String toString() {
 
   return "Stored as Polar ["+ getRho()+ ','+ getTheta()+ "]"+ "\n"+ "Computed as Cartesian ["+ getX()+ ','+ getY()+ "]";
+  }
+  @Override
+  public double getDistance(PointCP5 p) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getDistance'");
   }
 }
